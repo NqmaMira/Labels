@@ -10,6 +10,13 @@ target_sources(
         "SimpleLabel.cpp"
         "RichLabel.h"
         "RichLabel.cpp"
+        "TextTransformation.h"
+        "CapitalizeTransformation.h"
+        "CapitalizeTransformation.cpp"
+        "LeftTrimTransformation.h"
+        "LeftTrimTransformation.cpp"
+        "RightTrimTransformation.h"
+        "RightTrimTransformation.cpp"
 )
 
 

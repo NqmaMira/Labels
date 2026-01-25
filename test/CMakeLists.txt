@@ -12,6 +12,7 @@ target_sources(
     unit-tests
     PRIVATE
         "test-rich-label.cpp"
+        "test-transformations.cpp"
 )
 
 # Automatically register all tests
