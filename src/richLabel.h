@@ -1,5 +1,6 @@
 #pragma once
 #include "label.h"
+#include <string>
 
 enum class Colour {
 	Black,
@@ -22,5 +23,5 @@ public:
 	std::string getText() const override;
 	Colour getColour() const;
 	const std::string& getFontName() const;
-	unsigned intgetFontSize() const;
+	unsigned int getFontSize() const;
 };

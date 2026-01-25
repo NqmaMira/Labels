@@ -1,7 +1,8 @@
 #include "richLabel.h"
+#include <utility>
 
 richLabel::richLabel(std::string text, Colour colour, std::string fontName, unsigned int fontSize)
-	: text(std::move(text), colour(colour), fontName(std::move(fontName), fontSize(fontSize) {}
+	: text(std::move(text)), colour(colour), fontName(std::move(fontName)), fontSize(fontSize) {}
 
 std::string richLabel::getText() const {
 	return text;
