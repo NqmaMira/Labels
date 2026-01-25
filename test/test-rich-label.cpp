@@ -1,7 +1,7 @@
 #include "catch2/catch_all.hpp"
-#include "richLabel.h"
+#include "RichLabel.h"
 
-richLabel rLabel (
+RichLabel rLabel (
     "Hello",
     Colour::Green,
     "Arial",
@@ -22,7 +22,7 @@ TEST_CASE("RichLabel stores font name and size correctly") {
 }
 
 TEST_CASE("RichLabel keeps whitespaces in text") {
-    richLabel rLabel2 (
+    RichLabel rLabel2 (
         "  rich text  ",
         Colour::Green,
         "Arial",

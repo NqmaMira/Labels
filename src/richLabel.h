@@ -1,5 +1,5 @@
 #pragma once
-#include "label.h"
+#include "Label.h"
 #include <string>
 
 enum class Colour {
@@ -11,7 +11,7 @@ enum class Colour {
 	White
 };
 
-class richLabel :public label {
+class RichLabel :public Label {
 private:
 	std::string text;
 	Colour colour;
@@ -19,7 +19,7 @@ private:
 	unsigned int fontSize;
 
 public:
-	richLabel(std::string text, Colour colour, std::string fontName, unsigned int fontSize);
+	RichLabel(std::string text, Colour colour, std::string fontName, unsigned int fontSize);
 	std::string getText() const override;
 	Colour getColour() const;
 	const std::string& getFontName() const;

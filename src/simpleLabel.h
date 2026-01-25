@@ -1,10 +1,10 @@
 #pragma once
 #include "label.h"
 
-class simpleLabel :public label {
+class SimpleLabel :public Label {
 private:
 	std::string text;
 public:
-	explicit simpleLabel(std::string text);
+	explicit SimpleLabel(std::string text);
 	std::string getText() const override;
 };

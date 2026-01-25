@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 
-class label {
+class Label {
 public:
-	virtual ~label() = default;
+	virtual ~Label() = default;
 	virtual std::string getText() const = 0;
 };

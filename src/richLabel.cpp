@@ -1,21 +1,21 @@
-#include "richLabel.h"
+#include "RichLabel.h"
 #include <utility>
 
-richLabel::richLabel(std::string text, Colour colour, std::string fontName, unsigned int fontSize)
+RichLabel::RichLabel(std::string text, Colour colour, std::string fontName, unsigned int fontSize)
 	: text(std::move(text)), colour(colour), fontName(std::move(fontName)), fontSize(fontSize) {}
 
-std::string richLabel::getText() const {
+std::string RichLabel::getText() const {
 	return text;
 }
 
-Colour richLabel::getColour() const {
+Colour RichLabel::getColour() const {
 	return colour;
 }
 
-const std::string& richLabel::getFontName() const {
+const std::string& RichLabel::getFontName() const {
 	return fontName;
 }
 
-unsigned int richLabel::getFontSize() const {
+unsigned int RichLabel::getFontSize() const {
 	return fontSize;
 }
