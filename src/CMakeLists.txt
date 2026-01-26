@@ -17,6 +17,14 @@ target_sources(
         "LeftTrimTransformation.cpp"
         "RightTrimTransformation.h"
         "RightTrimTransformation.cpp"
+        "NormalizeSpaceTransformation.h"
+        "NormalizeSpaceTransformation.cpp"
+        "DecorateTransformation.h"
+        "DecorateTransformation.cpp"
+        "CensorTransformation.h"
+        "CensorTransformation.cpp"
+        "ReplaceTransformation.h"
+        "ReplaceTransformation.cpp"
 )
 
 
