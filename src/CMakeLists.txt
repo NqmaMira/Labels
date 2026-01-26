@@ -8,6 +8,7 @@ target_sources(
         "Label.h"
         "SimpleLabel.h"
         "SimpleLabel.cpp"
+        "RichLabelProperties.h"
         "RichLabel.h"
         "RichLabel.cpp"
         "TextTransformation.h"
@@ -27,6 +28,8 @@ target_sources(
         "ReplaceTransformation.cpp"
         "LabelDecorator.h"
         "LabelDecorator.cpp"
+        "RichLabelDecorator.h"
+        "RichLabelDecorator.cpp"
 )
 
 
