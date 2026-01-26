@@ -13,6 +13,7 @@ target_sources(
     PRIVATE
         "test-rich-label.cpp"
         "test-transformations.cpp"
+        "test-label-decorator.cpp"
 )
 
 # Automatically register all tests

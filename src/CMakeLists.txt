@@ -25,6 +25,8 @@ target_sources(
         "CensorTransformation.cpp"
         "ReplaceTransformation.h"
         "ReplaceTransformation.cpp"
+        "LabelDecorator.h"
+        "LabelDecorator.cpp"
 )
 
 
