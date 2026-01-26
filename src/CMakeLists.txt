@@ -30,6 +30,8 @@ target_sources(
         "LabelDecorator.cpp"
         "RichLabelDecorator.h"
         "RichLabelDecorator.cpp"
+        "RandomTransformDecorator.h"
+        "RandomTransformDecorator.cpp"
 )
 
 
