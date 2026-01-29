@@ -6,208 +6,217 @@
 #include "DecorateTransformation.h"
 #include "CensorTransformation.h"
 #include "ReplaceTransformation.h"
+#include <CompositeTransformation.h>
 
-TEST_CASE("CapitalizeTransformation capitalizes first letter when it is lowercase", "[capitalize]") {
+TEST_CASE("CapitalizeTransformation capitalizes first letter when it is lowercase", "[transformation][capitalize]") {
 	CapitalizeTransformation t;
 	REQUIRE(t.transform("capitalize me") == "Capitalize me");
 }
 
-TEST_CASE("CapitalizeTransformation leaves capitalized string unchanged", "[capitalize]") {
+TEST_CASE("CapitalizeTransformation leaves capitalized string unchanged", "[transformation][capitalize]") {
 	CapitalizeTransformation t;
 	REQUIRE(t.transform("Some text") == "Some text");
 }
 
-TEST_CASE("CapitalizeTransformation does not modify string starting with digit", "[capitalize]") {
+TEST_CASE("CapitalizeTransformation does not modify string starting with digit", "[transformation][capitalize]") {
 	CapitalizeTransformation t;
 	REQUIRE(t.transform("1asd") == "1asd");
 }
 
-TEST_CASE("CapitalizeTransformation does not modify string starting with symbol", "[capitalize]") {
+TEST_CASE("CapitalizeTransformation does not modify string starting with symbol", "[transformation][capitalize]") {
 	CapitalizeTransformation t;
 	REQUIRE(t.transform("@symbol") == "@symbol");
 }
 
-TEST_CASE("CapitalizeTransformation handles empty string", "[capitalize]") {
+TEST_CASE("CapitalizeTransformation handles empty string", "[transformation][capitalize]") {
 	CapitalizeTransformation t;
 	REQUIRE(t.transform("") == "");
 }
 
-TEST_CASE("LeftTrimTransformation removes leading spaces", "[leftTrim]") {
+TEST_CASE("LeftTrimTransformation removes leading spaces", "[transformation][leftTrim]") {
 	LeftTrimTransformation t;
 	REQUIRE(t.transform("   abc") == "abc");
 }
 
-TEST_CASE("LeftTrimTransformation preserves trailing spaces", "[leftTrim]") {
+TEST_CASE("LeftTrimTransformation preserves trailing spaces", "[transformation][leftTrim]") {
 	LeftTrimTransformation t;
 	REQUIRE(t.transform(" abc  ") == "abc  ");
 }
 
-TEST_CASE("LeftTrimTransformation leaves string without leading spaces unchanged", "[leftTrim]") {
+TEST_CASE("LeftTrimTransformation leaves string without leading spaces unchanged", "[transformation][leftTrim]") {
 	LeftTrimTransformation t;
 	REQUIRE(t.transform("abc") == "abc");
 }
 
-TEST_CASE("LeftTrimTransformation turns all-spaces string into empty string", "[leftTrim]") {
+TEST_CASE("LeftTrimTransformation turns all-spaces string into empty string", "[transformation][leftTrim]") {
 	LeftTrimTransformation t;
 	REQUIRE(t.transform("   ") == "");
 }
 
-TEST_CASE("LeftTrimTransformation handles empty string", "[leftTrim]") {
+TEST_CASE("LeftTrimTransformation handles empty string", "[transformation][leftTrim]") {
 	LeftTrimTransformation t;
 	REQUIRE(t.transform("") == "");
 }
 
-TEST_CASE("LeftTrimTransformation removes leading tabs", "[leftTrim]") {
+TEST_CASE("LeftTrimTransformation removes leading tabs", "[transformation][leftTrim]") {
 	LeftTrimTransformation t;
 	REQUIRE(t.transform("\t\tabc") == "abc");
 }
 
-TEST_CASE("LeftTrimTransformation removes leading newlines", "[leftTrim]") {
+TEST_CASE("LeftTrimTransformation removes leading newlines", "[transformation][leftTrim]") {
 	LeftTrimTransformation t;
 	REQUIRE(t.transform("\n\nabc") == "abc");
 }
 
-TEST_CASE("LeftTrimTransformation removes leading carriage returns", "[leftTrim]") {
+TEST_CASE("LeftTrimTransformation removes leading carriage returns", "[transformation][leftTrim]") {
 	LeftTrimTransformation t;
 	REQUIRE(t.transform("\r\rabc") == "abc");
 }
 
-TEST_CASE("LeftTrimTransformation removes mixed leading whitespace characters", "[leftTrim]") {
+TEST_CASE("LeftTrimTransformation removes mixed leading whitespace characters", "[transformation][leftTrim]") {
 	LeftTrimTransformation t;
 	REQUIRE(t.transform(" \t\n\r abc") == "abc");
 }
 
-TEST_CASE("RightTrimTransformation removes trailing spaces", "[rightTrim]") {
+TEST_CASE("RightTrimTransformation removes trailing spaces", "[transformation][rightTrim]") {
 	RightTrimTransformation t;
 	REQUIRE(t.transform("abc   ") == "abc");
 }
 
-TEST_CASE("RightTrimTransformation preserves leading spaces", "[rightTrim]") {
+TEST_CASE("RightTrimTransformation preserves leading spaces", "[transformation][rightTrim]") {
 	RightTrimTransformation t;
 	REQUIRE(t.transform("  abc  ") == "  abc");
 }
 
-TEST_CASE("RightTrimTransformation leaves string without trailing spaces unchanged", "[rightTrim]") {
+TEST_CASE("RightTrimTransformation leaves string without trailing spaces unchanged", "[transformation][rightTrim]") {
 	RightTrimTransformation t;
 	REQUIRE(t.transform("abc") == "abc");
 }
 
-TEST_CASE("RightTrimTransformation turns all-spaces string into empty string", "[rightTrim]") {
+TEST_CASE("RightTrimTransformation turns all-spaces string into empty string", "[transformation][rightTrim]") {
 	RightTrimTransformation t;
 	REQUIRE(t.transform("   ") == "");
 }
 
-TEST_CASE("RightTrimTransformation handles empty string", "[rightTrim]") {
+TEST_CASE("RightTrimTransformation handles empty string", "[transformation][rightTrim]") {
 	RightTrimTransformation t;
 	REQUIRE(t.transform("") == "");
 }
 
-TEST_CASE("RightTrimTransformation removes trailing tabs", "[rightTrim]") {
+TEST_CASE("RightTrimTransformation removes trailing tabs", "[transformation][rightTrim]") {
 	RightTrimTransformation t;
 	REQUIRE(t.transform("abc\t\t") == "abc");
 }
 
-TEST_CASE("RightTrimTransformation removes trailing newlines", "[rightTrim]") {
+TEST_CASE("RightTrimTransformation removes trailing newlines", "[transformation][rightTrim]") {
 	RightTrimTransformation t;
 	REQUIRE(t.transform("abc\n\n") == "abc");
 }
 
-TEST_CASE("RightTrimTransformation removes trailing carriage returns", "[rightTrim]") {
+TEST_CASE("RightTrimTransformation removes trailing carriage returns", "[transformation][rightTrim]") {
 	RightTrimTransformation t;
 	REQUIRE(t.transform("abc\r\r") == "abc");
 }
 
-TEST_CASE("RightTrimTransformation removes mixed trailing whitespace characters", "[rightTrim]") {
+TEST_CASE("RightTrimTransformation removes mixed trailing whitespace characters", "[transformation][rightTrim]") {
 	RightTrimTransformation t;
 	REQUIRE(t.transform("abc \t\n\r ") == "abc");
 }
 
-TEST_CASE("NormalizeSpaceTransformation collapses multiple inner spaces into one", "[normalizeSpace]") {
+TEST_CASE("NormalizeSpaceTransformation collapses multiple inner spaces into one", "[transformation][normalizeSpace]") {
 	NormalizeSpaceTransformation t;
 	REQUIRE(t.transform("some   text") == "some text");
 }
 
-TEST_CASE("NormalizeSpaceTransformation preserves leading and trailing spaces while normalizing inner spaces", "[normalizeSpace]") {
+TEST_CASE("NormalizeSpaceTransformation preserves leading and trailing spaces while normalizing inner spaces", "[transformation][normalizeSpace]") {
 	NormalizeSpaceTransformation t;
 	REQUIRE(t.transform(" some    text ") == " some text ");
 }
 
-TEST_CASE("NormalizeSpaceTransformation leaves string without extra spaces unchanged", "[normalizeSpace]") {
+TEST_CASE("NormalizeSpaceTransformation leaves string without extra spaces unchanged", "[transformation][normalizeSpace]") {
 	NormalizeSpaceTransformation t;
 	REQUIRE(t.transform("noextra") == "noextra");
 }
 
-TEST_CASE("NormalizeSpaceTransformation reduces all-spaces string to a single space", "[normalizeSpace]") {
+TEST_CASE("NormalizeSpaceTransformation reduces all-spaces string to a single space", "[transformation][normalizeSpace]") {
 	NormalizeSpaceTransformation t;
 	REQUIRE(t.transform("   ") == " ");
 }
 
-TEST_CASE("NormalizeSpaceTransformation handles empty string", "[normalizeSpace]") {
+TEST_CASE("NormalizeSpaceTransformation handles empty string", "[transformation][normalizeSpace]") {
 	NormalizeSpaceTransformation t;
 	REQUIRE(t.transform("") == "");
 }
 
-TEST_CASE("DecorateTransformation wraps non-empty text", "[decorate]") {
+TEST_CASE("DecorateTransformation wraps non-empty text", "[transformation][decorate]") {
 	DecorateTransformation t;
 	REQUIRE(t.transform("abc") == "-={ abc }=-");
 }
 
-TEST_CASE("DecorateTransformation wraps empty string", "[decorate]") {
+TEST_CASE("DecorateTransformation wraps empty string", "[transformation][decorate]") {
 	DecorateTransformation t;
 	REQUIRE(t.transform("") == "-={  }=-");
 }
 
-TEST_CASE("DecorateTransformation preserves inner spaces while decorating", "[decorate]") {
+TEST_CASE("DecorateTransformation preserves inner spaces while decorating", "[transformation][decorate]") {
 	DecorateTransformation t;
 	REQUIRE(t.transform(" text ") == "-={  text  }=-");
 }
 
-TEST_CASE("CensorTransformation censors a single occurrence", "[censor]") {
+TEST_CASE("CensorTransformation censors a single occurrence", "[transformation][censor]") {
 	CensorTransformation t("abc");
 	REQUIRE(t.transform(" abc def") == " *** def");
 }
 
-TEST_CASE("CensorTransformation censors multiple occurrences", "[censor]") {
+TEST_CASE("CensorTransformation censors multiple occurrences", "[transformation][censor]") {
 	CensorTransformation t("abc");
 	REQUIRE(t.transform(" abc def abcdef") == " *** def ***def");
 }
 
-TEST_CASE("CensorTransformation censors overlapping occurrences", "[censor]") {
+TEST_CASE("CensorTransformation censors overlapping occurrences", "[transformation][censor]") {
 	CensorTransformation t("abc");
 	REQUIRE(t.transform("abcabc") == "******");
 }
 
-TEST_CASE("CensorTransformation leaves text unchanged when no match is found", "[censor]") {
+TEST_CASE("CensorTransformation leaves text unchanged when no match is found", "[transformation][censor]") {
 	CensorTransformation t("abc");
 	REQUIRE(t.transform("no match") == "no match");
 }
 
-TEST_CASE("CensorTransformation with empty censored word does nothing", "[censor]") {
+TEST_CASE("CensorTransformation with empty censored word does nothing", "[transformation][censor]") {
 	CensorTransformation t("");
 	REQUIRE(t.transform("abc") == "abc");
 }
 
-TEST_CASE("ReplaceTransformation replaces a single occurrence", "[replace]") {
+TEST_CASE("ReplaceTransformation replaces a single occurrence", "[transformation][replace]") {
 	ReplaceTransformation t("abc", "d");
 	REQUIRE(t.transform(" abc def") == " d def");
 }
 
-TEST_CASE("ReplaceTransformation replaces multiple occurrences", "[replace]") {
+TEST_CASE("ReplaceTransformation replaces multiple occurrences", "[transformation][replace]") {
 	ReplaceTransformation t("abc", "d");
 	REQUIRE(t.transform(" abc abcdef") == " d ddef");
 }
 
-TEST_CASE("ReplaceTransformation replaces overlapping occurrences", "[replace]") {
+TEST_CASE("ReplaceTransformation replaces overlapping occurrences", "[transformation][replace]") {
 	ReplaceTransformation t("abc", "d");
 	REQUIRE(t.transform("abcabc") == "dd");
 }
 
-TEST_CASE("ReplaceTransformation leaves text unchanged when no match is found", "[replace]") {
+TEST_CASE("ReplaceTransformation leaves text unchanged when no match is found", "[transformation][replace]") {
 	ReplaceTransformation t("abc", "d");
 	REQUIRE(t.transform("no match") == "no match");
 }
 
-TEST_CASE("ReplaceTransformation with empty source string does nothing", "[replace]") {
+TEST_CASE("ReplaceTransformation with empty source string does nothing", "[transformation][replace]") {
 	ReplaceTransformation t("", "x");
 	REQUIRE(t.transform("abc") == "abc");
+}
+
+TEST_CASE("CompositeTransformation applies multiple transformations in order", "[transformation][composite]") {
+	auto composite = std::make_shared<CompositeTransformation>();
+	composite->add(std::make_shared<CapitalizeTransformation>());
+	composite->add(std::make_shared<DecorateTransformation>());
+
+	REQUIRE(composite->transform("hello") == "-={ Hello }=-");
 }

@@ -7,9 +7,9 @@
 #include "DecorateTransformation.h"
 #include <RandomTransformDecorator.h>
 #include <CensorTransformation.h>
+#include <CompositeTransformation.h>
 
-TEST_CASE("LabelDecorator applies transformation to SimpleLabel without making it rich",
-    "[decorator]") {
+TEST_CASE("LabelDecorator applies transformation to SimpleLabel without making it rich", "[decorator]") {
     auto simple = std::make_shared<SimpleLabel>("   hello");
     auto decoratedSimple = LabelDecorator::create(simple, std::make_shared<LeftTrimTransformation>());
 
@@ -17,8 +17,7 @@ TEST_CASE("LabelDecorator applies transformation to SimpleLabel without making i
     REQUIRE(dynamic_cast<RichLabelProperties*>(decoratedSimple.get()) == nullptr);
 }
 
-TEST_CASE("LabelDecorator applies transformation to RichLabel and preserves rich properties",
-    "[decorator]") {
+TEST_CASE("LabelDecorator applies transformation to RichLabel and preserves rich properties", "[decorator]") {
     auto rich = std::make_shared<RichLabel>("   rich text  ", Colour::Blue, "Arial", 12);
     auto decoratedRich = LabelDecorator::create(rich, std::make_shared<LeftTrimTransformation>());
 
@@ -52,14 +51,14 @@ TEST_CASE("Stacked LabelDecorators preserve RichLabelProperties", "[decorator]")
     REQUIRE(richView->getFontName() == "Arial");
 }
 
-TEST_CASE("RandomTransformDecorator applies all transformations probabilistically", "[decorator]") {
+TEST_CASE("RandomTransformDecorator applies all transformations probabilistically", "[decorator][random]") {
     auto label = std::make_shared<SimpleLabel>("   hello");
 
     auto randomDecorator = std::make_shared<RandomTransformDecorator>(
         label,
         std::vector<std::shared_ptr<TextTransformation>>{
         std::make_shared<LeftTrimTransformation>(),
-            std::make_shared<CensorTransformation>("hello"),  // <- replaced Capitalize
+            std::make_shared<CensorTransformation>("hello"),
             std::make_shared<DecorateTransformation>()
     });
 
@@ -70,7 +69,7 @@ TEST_CASE("RandomTransformDecorator applies all transformations probabilisticall
         auto output = randomDecorator->getText();
 
         if (!seenTrim && !output.empty() && output.front() != ' ') seenTrim = true;
-        if (!seenCensor && output.find("*****") != std::string::npos) seenCensor = true; // check censor applied
+        if (!seenCensor && output.find("*****") != std::string::npos) seenCensor = true;
         if (!seenDecorate && output.find("-={") != std::string::npos) seenDecorate = true;
 
         if (seenTrim && seenCensor && seenDecorate) break;
@@ -81,18 +80,29 @@ TEST_CASE("RandomTransformDecorator applies all transformations probabilisticall
     REQUIRE(seenDecorate);
 }
 
-TEST_CASE("RandomTransformDecorator preserves RichLabel properties", "[decorator][rich][random]") {
+TEST_CASE("RandomTransformDecorator preserves RichLabel properties", "[decorator][random]") {
     auto rich = std::make_shared<RichLabel>(" text ", Colour::Red, "Arial", 14);
 
     auto randomDecorator = std::make_shared<RandomTransformDecorator>(
         rich,
-        std::vector<std::shared_ptr<TextTransformation>>{
-        std::make_shared<LeftTrimTransformation>(),
-            std::make_shared<CapitalizeTransformation>()
-    });
+        std::vector<std::shared_ptr<TextTransformation>> {
+            std::make_shared<LeftTrimTransformation>(), std::make_shared<CapitalizeTransformation>()
+        }
+    );
 
     auto richView = dynamic_cast<RichLabelProperties*>(randomDecorator->getLabel().get());
     REQUIRE(richView != nullptr);
     REQUIRE(richView->getFontName() == "Arial");
     REQUIRE(richView->getColour() == Colour::Red);
+}
+
+TEST_CASE("LabelDecorator works correctly with CompositeTransformation", "[decorator][composite]") {
+    auto composite = std::make_shared<CompositeTransformation>();
+    composite->add(std::make_shared<CapitalizeTransformation>());
+    composite->add(std::make_shared<DecorateTransformation>());
+
+    auto label = std::make_shared<SimpleLabel>("hello");
+    auto decorated = std::make_shared<LabelDecorator>(label, composite);
+
+    REQUIRE(decorated->getText() == "-={ Hello }=-");
 }

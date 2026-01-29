@@ -1,7 +1,7 @@
 #include "catch2/catch_all.hpp"
 #include "RichLabel.h"
 
-TEST_CASE("RichLabel returns correct text") {
+TEST_CASE("RichLabel returns correct text", "[label]") {
     RichLabel rLabel(
         "Hello",
         Colour::Red,
@@ -11,7 +11,7 @@ TEST_CASE("RichLabel returns correct text") {
     REQUIRE(rLabel.getText() == "Hello");
 }
 
-TEST_CASE("RichLabel stores color correctly") {
+TEST_CASE("RichLabel stores color correctly", "[label]") {
     RichLabel rLabel(
         "Hello",
         Colour::Green,
@@ -21,7 +21,7 @@ TEST_CASE("RichLabel stores color correctly") {
     REQUIRE(rLabel.getColour() == Colour::Green);
 }
 
-TEST_CASE("RichLabel stores font name and size correctly") {
+TEST_CASE("RichLabel stores font name and size correctly", "[label]") {
     RichLabel rLabel(
         "Hello",
         Colour::Green,
@@ -32,7 +32,7 @@ TEST_CASE("RichLabel stores font name and size correctly") {
     REQUIRE(rLabel.getFontSize() == 16);
 }
 
-TEST_CASE("RichLabel keeps whitespaces in text") {
+TEST_CASE("RichLabel keeps whitespaces in text", "[label]") {
     RichLabel rLabel (
         "  rich text  ",
         Colour::Green,
