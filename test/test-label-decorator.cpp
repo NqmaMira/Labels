@@ -8,6 +8,7 @@
 #include <RandomTransformDecorator.h>
 #include <CensorTransformation.h>
 #include <CompositeTransformation.h>
+#include <CyclingTransformDecorator.h>
 
 TEST_CASE("LabelDecorator applies transformation to SimpleLabel without making it rich", "[decorator]") {
     auto simple = std::make_shared<SimpleLabel>("   hello");
@@ -153,4 +154,18 @@ TEST_CASE("Removing a decorator from a chain works as expected", "[decorator][re
         auto newHead = LabelDecorator::remove(dec, cap);
         REQUIRE(newHead->getText() == "-={ hello }=-");
     }
+}
+
+TEST_CASE("CyclingTransformDecorator rotates through transformations", "[decorator][cycling]") {
+    auto label = std::make_shared<SimpleLabel>("abc");
+
+    std::vector<std::shared_ptr<TextTransformation>> transforms;
+    transforms.push_back(std::make_shared<CapitalizeTransformation>());
+    transforms.push_back(std::make_shared<DecorateTransformation>());
+
+    CyclingTransformDecorator cycler(label, transforms);
+
+    REQUIRE(cycler.getText() == "Abc");
+    REQUIRE(cycler.getText() == "-={ abc }=-");
+    REQUIRE(cycler.getText() == "Abc");
 }

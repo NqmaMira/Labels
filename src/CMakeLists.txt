@@ -43,6 +43,10 @@ target_sources(
         "HelpLabel.cpp"
         "RichHelpLabel.h"
         "RichHelpLabel.cpp"
+        "CensorFactory.h"
+        "CensorFactory.cpp"
+        "CyclingTransformDecorator.h"
+        "CyclingTransformDecorator.cpp"
 )
 
 

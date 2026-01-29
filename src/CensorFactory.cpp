@@ -1,6 +1,6 @@
 #include "CensorFactory.h"
 
-//std::map<std::string, std::shared_ptr<CensorTransformation>> CensorFactory::cache;
+std::map<std::string, std::shared_ptr<CensorTransformation>> CensorFactory::cache;
 
 std::shared_ptr<CensorTransformation> CensorFactory::getCensor(const std::string& word) {
     if (word.length() > 4) {
