@@ -34,6 +34,15 @@ target_sources(
         "RandomTransformDecorator.cpp"
         "CompositeTransformation.h"
         "CompositeTransformation.cpp"
+        "CustomLabel.h"
+        "CustomLabel.cpp"
+        "HelpProvider.h"
+        "SimpleHelpProvider.h"
+        "SimpleHelpProvider.cpp"
+        "HelpLabel.h"
+        "HelpLabel.cpp"
+        "RichHelpLabel.h"
+        "RichHelpLabel.cpp"
 )
 
 

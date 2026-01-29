@@ -11,7 +11,7 @@ target_link_libraries(
 target_sources(
     unit-tests
     PRIVATE
-        "test-rich-label.cpp"
+        "test-label.cpp"
         "test-transformations.cpp"
         "test-label-decorator.cpp"
 )
