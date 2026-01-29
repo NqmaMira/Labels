@@ -213,10 +213,23 @@ TEST_CASE("ReplaceTransformation with empty source string does nothing", "[trans
 	REQUIRE(t.transform("abc") == "abc");
 }
 
-TEST_CASE("CompositeTransformation applies multiple transformations in order", "[transformation][composite]") {
-	auto composite = std::make_shared<CompositeTransformation>();
-	composite->add(std::make_shared<CapitalizeTransformation>());
-	composite->add(std::make_shared<DecorateTransformation>());
+TEST_CASE("CompositeTransformation respects transformation order", "[transformation][composite]") {
+	auto composite1 = std::make_shared<CompositeTransformation>();
+	composite1->add(std::make_shared<CapitalizeTransformation>());
+	composite1->add(std::make_shared<DecorateTransformation>());
 
-	REQUIRE(composite->transform("hello") == "-={ Hello }=-");
+	auto composite2 = std::make_shared<CompositeTransformation>();
+	composite2->add(std::make_shared<DecorateTransformation>());
+	composite2->add(std::make_shared<CapitalizeTransformation>());
+
+	REQUIRE(composite1->transform("hello") == "-={ Hello }=-");
+	REQUIRE(composite2->transform("hello") == "-={ hello }=-");
+}
+
+
+TEST_CASE("CompositeTransformation with no steps returns input unchanged", "[transformation][composite]") {
+	auto composite = std::make_shared<CompositeTransformation>();
+
+	REQUIRE(composite->transform("hello") == "hello");
+	REQUIRE(composite->transform("") == "");
 }

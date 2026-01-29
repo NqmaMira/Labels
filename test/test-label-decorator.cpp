@@ -106,3 +106,51 @@ TEST_CASE("LabelDecorator works correctly with CompositeTransformation", "[decor
 
     REQUIRE(decorated->getText() == "-={ Hello }=-");
 }
+
+TEST_CASE("CompositeTransformation can be stacked with other decorators", "[decorator][composite]") {
+    auto composite = std::make_shared<CompositeTransformation>();
+    composite->add(std::make_shared<CapitalizeTransformation>());
+    composite->add(std::make_shared<DecorateTransformation>());
+
+    auto label = std::make_shared<SimpleLabel>("   hello");
+
+    auto trim = LabelDecorator::create(label, std::make_shared<LeftTrimTransformation>());
+    auto compositeDecorator = LabelDecorator::create(trim, composite);
+
+    REQUIRE(compositeDecorator->getText() == "-={ Hello }=-");
+}
+
+TEST_CASE("CompositeTransformation preserves RichLabel properties when used in LabelDecorator", "[decorator][composite]") {
+    auto composite = std::make_shared<CompositeTransformation>();
+    composite->add(std::make_shared<CapitalizeTransformation>());
+    composite->add(std::make_shared<DecorateTransformation>());
+
+    auto rich = std::make_shared<RichLabel>("hello", Colour::Blue, "Arial", 12);
+    auto decorated = LabelDecorator::create(rich, composite);
+
+    REQUIRE(decorated->getText() == "-={ Hello }=-");
+
+    auto richView = dynamic_cast<RichLabelProperties*>(decorated.get());
+    REQUIRE(richView != nullptr);
+    REQUIRE(richView->getColour() == Colour::Blue);
+    REQUIRE(richView->getFontName() == "Arial");
+    REQUIRE(richView->getFontSize() == 12);
+}
+
+TEST_CASE("Removing a decorator from a chain works as expected", "[decorator][remove]") {
+    auto base = std::make_shared<SimpleLabel>("hello");
+    auto cap = std::make_shared<LabelDecorator>(base, std::make_shared<CapitalizeTransformation>());
+    auto dec = std::make_shared<LabelDecorator>(cap, std::make_shared<DecorateTransformation>());
+
+    REQUIRE(dec->getText() == "-={ Hello }=-");
+
+    SECTION("Can remove the outer decorator") {
+        auto newHead = LabelDecorator::remove(dec, dec);
+        REQUIRE(newHead->getText() == "Hello");
+    }
+
+    SECTION("Can remove the inner decorator") {
+        auto newHead = LabelDecorator::remove(dec, cap);
+        REQUIRE(newHead->getText() == "-={ hello }=-");
+    }
+}

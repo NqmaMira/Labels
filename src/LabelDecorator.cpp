@@ -29,3 +29,20 @@ std::shared_ptr<Label> LabelDecorator::create(std::shared_ptr<Label> label, std:
     }
     return std::make_shared<LabelDecorator>(label, transformation);
 }
+
+std::shared_ptr<Label> LabelDecorator::remove(std::shared_ptr<Label> head, std::shared_ptr<LabelDecorator> toRemove) {
+    if (!head || !toRemove) {
+        return head;
+    }
+
+    if (head == toRemove) {
+        return toRemove->getLabel();
+    }
+
+    auto decorator = std::dynamic_pointer_cast<LabelDecorator>(head);
+    if (decorator) {
+        decorator->label = remove(decorator->getLabel(), toRemove);
+        return decorator;
+    }
+    return head;
+}

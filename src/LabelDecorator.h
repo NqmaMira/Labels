@@ -14,5 +14,7 @@ public:
 
     const std::shared_ptr<Label>& getLabel() const { return label; }
     virtual std::string getText() const override;
+
     static std::shared_ptr<Label> create(std::shared_ptr<Label> label, std::shared_ptr<TextTransformation> transformation);
+    static std::shared_ptr<Label> remove(std::shared_ptr<Label> head, std::shared_ptr<LabelDecorator> toRemove);
 };
