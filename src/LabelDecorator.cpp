@@ -20,6 +20,9 @@ LabelDecorator::LabelDecorator(
     : label(std::move(label)), transformation(std::move(transformation)) {}
 
 std::string LabelDecorator::getText() const {
+    if (!transformation) {
+        return label->getText();
+    }
     return transformation->transform(label->getText());
 }
 
