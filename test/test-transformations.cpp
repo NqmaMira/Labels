@@ -7,6 +7,7 @@
 #include "CensorTransformation.h"
 #include "ReplaceTransformation.h"
 #include <CompositeTransformation.h>
+#include <CensorFactory.h>
 
 TEST_CASE("CapitalizeTransformation capitalizes first letter when it is lowercase", "[transformation][capitalize]") {
 	CapitalizeTransformation t;
@@ -232,4 +233,18 @@ TEST_CASE("CompositeTransformation with no steps returns input unchanged", "[tra
 
 	REQUIRE(composite->transform("hello") == "hello");
 	REQUIRE(composite->transform("") == "");
+}
+
+TEST_CASE("CensorFactory implements Flyweight pattern", "[transformation][censor]") {
+	SECTION("Short words share the same instance") {
+		auto censor1 = CensorFactory::getCensor("bad");
+		auto censor2 = CensorFactory::getCensor("bad");
+		REQUIRE(censor1.get() == censor2.get());
+	}
+
+	SECTION("Long words do not share instances") {
+		auto censor1 = CensorFactory::getCensor("verylongword");
+		auto censor2 = CensorFactory::getCensor("verylongword");
+		REQUIRE(censor1.get() != censor2.get());
+	}
 }
